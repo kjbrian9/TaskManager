@@ -1,8 +1,10 @@
 <?php
-
-
-function getTask($connection){
-    $sqlQuery = "SELECT * FROM  task";
+function getTask($connection,$user){
+    session_start();
+    $user = $_SESSION["userId"];
+    
+    error_log($user);
+    $sqlQuery = "SELECT * FROM  task WHERE UserId = '$user'";
     $result = mysqli_query($connection,$sqlQuery);
     $tasksArray = array();
     
@@ -12,6 +14,7 @@ function getTask($connection){
             array_push($tasksArray,$row);
         }
         echo json_encode($tasksArray);
+        
     }
     else
     {
